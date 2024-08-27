@@ -15,7 +15,7 @@ AutoFakeSlant=0.2]{Khmer OS}
 Script=Khmer,
 Ligatures=TeX,
 AutoFakeBold=1.5,
-AutoFakeSlant=0.2]{Khmer OS}
+AutoFakeSlant=0.2]{Khmer OS Bokor}
 \setmonofont[%
 Script=Khmer,
 Ligatures=TeX,
@@ -95,11 +95,9 @@ AutoFakeSlant=0.2]{Khmer OS Muol Light}
 \setlist[itemize,4]{t}
 % todo: enable use of sub enumerate
 \RequirePackage{tasks}
-\NewPatternFormat{k}{\@alpkh}% cntformats package
-\NewPatternFormat{m}{\@khmer}% counter-format=tsk[m]
 \settasks{%
-  counter-format={tsk[k].},%
-  label-format=,%
+  label={\alpkh*.},%
+  label-format=\color{blue}\bfseries,%
   label-offset=0.5ex,%
   label-align=right,%
   label-width=3.5ex,%
@@ -109,9 +107,9 @@ AutoFakeSlant=0.2]{Khmer OS Muol Light}
   after-skip=0ex,%
   after-item-skip=0.5ex%
 }
-\NewTasks[%
+\NewTasksEnvironment[%
 style=enumerate,%
-counter-format={tsk[k].},%
+label={\alpkh*.},%
 label-format=\color{blue}\bfseries,%
 label-offset=0.5ex,%
 label-align=right,%
@@ -121,7 +119,7 @@ column-sep=1ex,%
 before-skip=0ex,%
 after-skip=0ex,%
 after-item-skip=0.5ex]{Enumerate}[\item]
-\NewTasks[%
+\NewTasksEnvironment[%
 style=itemize,
 label=\ensuremath{\bullet},
 label-format=\color{blue}\bfseries,%
@@ -169,7 +167,7 @@ after-item-skip=0.5ex]{Itemize}[\item]
     មណ្ឌលប្រឡង៖ \dotfill
   \end{minipage}\\[-.5\baselineskip]
   \begin{minipage}[b]{5cm}
-    {\small ឈ្មោះ និងហត្ថលេខាអនុរក្ស៖}
+    {ឈ្មោះ និងហត្ថលេខាអនុរក្ស៖}
     \vspace*{3\baselineskip}
   \end{minipage}
   \begin{minipage}[b]{9cm}
@@ -196,11 +194,19 @@ after-item-skip=0.5ex]{Itemize}[\item]
     \end{tikzpicture}
   \end{minipage}~\quad~
   \begin{minipage}[t]{17cm}
-    \textbf{\color{red}\sffamily​ សេចក្ដីណែនាំ៖}\\
-    ១. បេក្ខជនត្រូវគូសខ្វែងនៅទំព័រទី២ ផ្នែកខាងលើដែលត្រូវកាត់ចេញ។\\
-    ២. បេក្ខជនត្រូវសរសេរចម្លើយនៃសំណួរបន្តនៅលើទំព័រទី២ ទី៣ និងទី៤។
+    \textbf{\color{red}\sffamily​ សេចក្ដីណែនាំ៖}
+    \begin{enumerate}[m,topsep=0pt,noitemsep]
+    	\item បេក្ខជនត្រូវគូសខ្វែងនៅទំព័រទី២ ផ្នែកខាងលើដែលត្រូវកាត់ចេញ។
+    	\item បេក្ខជនត្រូវសរសេរចម្លើយនៃសំណួរបន្តនៅលើទំព័រទី២ ទី៣ និងទី៤។
+    \end{enumerate}
   \end{minipage}
   \vskip1em}
+\RequirePackage{lastpage}
+\RequirePackage{fancyhdr}
+\pagestyle{fancy} 
+\pagenumbering{khmer}
+\cfoot{\itshape\color{gray} [ ទំព័រ \textsf{\thepage} នៃ \textsf{\pageref{LastPage}} ទំព័រសរុប ]}
+%
 % todo: declare experimental latex 3 package to use new language syntax
 \RequirePackage{expl3}[2017/04/15]
 % todo: provide new class
@@ -210,7 +216,7 @@ after-item-skip=0.5ex]{Itemize}[\item]
   \exp_after:wN \int_to_khmer:n \cs:w c@#1 \cs_end:
 }
 \cs_new:Npn \int_to_khmer:n #1 {
-  \exp_after:wN \_int_to_khmer:n \__int_value:w #1 \q_nil
+  \exp_after:wN \_int_to_khmer:n \int_value:w #1 \q_nil
 }
 \cs_new:Npn \_int_to_khmer:n #1 {
   \if_meaning:w #1 \q_nil
@@ -285,7 +291,5 @@ after-item-skip=0.5ex]{Itemize}[\item]
     \int_incr:N\l_tempa_int \noindent\hphantom{}\dotfill\\ }
     \hphantom{}\dotfill
   }
-%
-\def\thepage{\textcolor{magenta!67!red}{\mlfamily\khmer{page}}}
 %
 \endinput
